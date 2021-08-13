@@ -11,10 +11,8 @@ CC_NAME := gcc
 CC_VERSION ?= 11
 # Set CC to `name-version` if CC_VERSION isn't empty or to `name` otherwise
 ifeq ($(strip $(CC_VERSION)),)
-    $(info empty)
 CC = $(CC_NAME)
 else
-    $(info not empty)
 CC = $(CC_NAME)-$(CC_VERSION)
 endif
 ################################################################################
@@ -221,10 +219,8 @@ AR_NAME := gcc-ar
 AR_VERSION ?= $(CC_VERSION)
 # Set AR to `name-version` if AR_VERSION isn't empty or to `name` otherwise
 ifeq ($(strip $(CC_VERSION)),)
-    $(info empty)
 AR = $(AR_NAME)
 else
-    $(info not empty)
 AR = $(AR_NAME)-$(AR_VERSION)
 endif
 # Extra flags to give to ar
