@@ -27,6 +27,7 @@ ifeq ($(PROJECT_TYPE),header)
 # Nothing to build for header only project(tests are build with the `test`
 # target).
 SRC_DIRS :=
+COV_CMD :=
 .PHONY: header
 header::;
 endif
@@ -128,6 +129,12 @@ CLEAN_DEPS := clean_test
 .PHONY: clean_test
 clean_test::
 	$(MAKE) -C $(TEST_PATH) clean MAKEFILE_PATH=../$(MAKEFILE_PATH)
+
+# Tests coverage
+COV_DEPS := cov_test
+.PHONY: cov_test
+cov_test::
+	$(MAKE) -C $(TEST_PATH) cov MAKEFILE_PATH=../$(MAKEFILE_PATH)
 endif
 ################################################################################
 # CODE ANALYSIS/COVERAGE - DOC
@@ -140,14 +147,8 @@ analyze:: | $(SCANBUILD_PATH) $(CPPCHECK_PATH)
 
 # Code coverage tools
 .PHONY: cov
-cov:: $(INFO_FILES) | $(GCOV_PATH)
-	$(GCOV)
-	$(LCOV_FINAL)
-	$(GENHTML)
-	mv ./*.gcov ./coverage/gcov
-
-$(LCOV_PATH)/%.info: $(OBJECT_PATH)/%.o | $(LCOV_PATH)
-	$(LCOV)
+cov:: $(COV_DEPS) | $(LCOV_PATH)
+	$(COV_CMD)
 
 # Generate documentation
 .PHONY: doc
@@ -187,7 +188,6 @@ $(BUILD_PATH):          ;mkdir -p $(BUILD_PATH)
 $(CPPCHECK_PATH):       ;mkdir -p $(CPPCHECK_PATH)
 $(DEP_PATH):            ;mkdir -p $(DEP_PATH)
 $(DOXYGEN_PATH):        ;mkdir -p $(DOXYGEN_PATH)
-$(GCOV_PATH):           ;mkdir -p $(GCOV_PATH)
 $(HEADER_INSTALL_PATH): ;mkdir -p $(HEADER_INSTALL_PATH)
 $(LCOV_PATH):           ;mkdir -p $(LCOV_PATH)
 $(LIB_INSTALL_PATH):    ;mkdir -p $(LIB_INSTALL_PATH)

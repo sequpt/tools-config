@@ -42,7 +42,9 @@ CC_WARNING += -Wc11-c2x-compat
 endif
 # Pointer is cast to a type with stricter alignment
 # Warn even for platform allowing missaligned memory access(x86)
+ifeq ($(CC),$(filter $(CC),gcc-8 gcc-9 gcc-10 gcc-11))
 CC_WARNING += -Wcast-align=strict
+endif
 # Pointer is cast to remove a type qualifier
 CC_WARNING += -Wcast-qual
 # Implicit cast that may change the value
@@ -149,13 +151,21 @@ CC_WARNING += -D_FORTIFY_SOURCE=2
 CC_ERROR := -pedantic-errors
 # Treat all warnings as errors
 CC_ERROR += #-Werror
+# Set the C version to the latest standard supported by the compiler used.
+ifeq ($(CC),$(filter $(CC),gcc-8 gcc-9 gcc-10 gcc-11))
 CC_C_VERSION := -std=c17
+else
+CC_C_VERSION := -std=c11
+endif
 # Default build mode is debug
 CC_DEBUG := -g3
-CC_OPTIMIZATION := -O1
+# Og is a level of optimization specially made for debug.
+CC_OPTIMIZATION := -Og
 CC_PROFILING    := #-pg
-# Valgrind doesn't seem to work properly on executables build with --coverage
-CC_COVERAGE  := #--coverage
+# Valgrind doesn't seem to work properly on executables build with --coverage.
+# Invoke -fprofile-arcs -ftest-coverage(when compiling) and -lcov(when linking).
+# Create *.gcno files.
+CC_COVERAGE := --coverage
 # Directories to be used with the -I option
 CC_IDIRS  = $(SRC_DIRS:%=-I%)
 CC_IDIRS += $(INC_DIRS:%=-I%)
