@@ -13,6 +13,10 @@ ifneq ($(BUILD_MODE),$(findstring $(BUILD_MODE),debug release))
     $(error BUILD_MODE must be one of [debug, release])
 endif
 
+ifneq ($(COVERAGE),$(findstring $(COVERAGE),true false))
+    $(error COVERAGE must be one of [true, false])
+endif
+
 # Build project and tests(if there is a test folder) with the default build mode
 # (debug).
 .PHONY: all

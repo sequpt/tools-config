@@ -166,7 +166,9 @@ CC_PROFILING    := #-pg
 # Valgrind doesn't seem to work properly on executables build with --coverage.
 # Invoke -fprofile-arcs -ftest-coverage(when compiling) and -lcov(when linking).
 # Create *.gcno files.
+ifeq ($(COVERAGE), true)
 CC_COVERAGE := --coverage
+endif
 # Directories to be used with the -I option
 CC_IDIRS  = $(SRC_DIRS:%=-I%)
 CC_IDIRS += $(INC_DIRS:%=-I%)
