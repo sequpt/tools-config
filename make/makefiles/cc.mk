@@ -8,13 +8,14 @@
 # Compiler name                                                              [R]
 CC_NAME := gcc
 # Compiler version                                                           [R]
-CC_VERSION ?= 11
+CC_VERSION :=
 # Set CC to `name-version` if CC_VERSION isn't empty or to `name` otherwise
 ifeq ($(strip $(CC_VERSION)),)
-CC = $(CC_NAME)
-else
-CC = $(CC_NAME)-$(CC_VERSION)
+CC_VERSION := $(shell \
+    gcc -v 2>&1 >/dev/null \
+    | sed -Ene 's/gcc version ([0-9]+).*$$/\1/p')
 endif
+CC = $(CC_NAME)-$(CC_VERSION)
 ################################################################################
 # WARNING
 #
