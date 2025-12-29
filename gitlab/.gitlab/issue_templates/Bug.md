@@ -1,8 +1,11 @@
+<!-- Lines like this one are HTML comments. You don't need to remove them
+     before submitting the issue.
+-->
 # Bug report
 
 ## Short description
 
-<!-- Brief summary of the encountered bug. -->
+<!-- Brief summary of the bug. -->
 
 ## Environment
 
@@ -10,7 +13,7 @@
 
 ## Steps to reproduce
 
-<!-- Steps needed to trigger the bug . -->
+<!-- Steps needed to trigger the bug. -->
 <!-- Add or remove numbers to the list according to the number of steps needed. -->
 
 1.
@@ -23,15 +26,29 @@
 
 ## Expected behavior/result
 
-<!-- What should happens without the bug. -->
+<!-- What should happen without the bug. -->
+
+## Minimal reproducible example
+
+<!-- Write below the smallest amount of code needed to trigger the bug.
+     If this is not practical you can put here a link to a repository instead.
+-->
+
+<details>
+<summary>Click to see the code</summary>
+<pre>
+<!-- Insert code after this comment -->
+</pre>
+</details>
 
 ## Additional information
 
-<!-- Logs, console outputs, screenshots, etc -->
+<!-- Logs, console outputs, screenshots, etc. -->
 
 ## Possible fixes
 
 <!-- Ideas about where the bug comes from and how to fix it. -->
 
-<!-- Don't remove the following line! -->
+<!-- DON'T REMOVE THE FOLLOWING LINES! -->
 /label ~bug
+/assign @sequpt
